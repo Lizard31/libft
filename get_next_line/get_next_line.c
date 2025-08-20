@@ -1,0 +1,122 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbordian <tbordian@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/31 13:42:20 by tbordian          #+#    #+#             */
+/*   Updated: 2025/08/07 15:17:10 by tbordian         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	const char	*csrc = (const char *)src;
+	char		*cdest;
+
+	cdest = (char *)dest;
+	if (!dest && !src)
+		return (NULL);
+	while (n--)
+		*cdest++ = *csrc++;
+	return (dest);
+}
+
+static char	*fill_line(int fd, char *buf, char *line)
+{
+	int		n;
+	char	*tmp;
+
+	n = 1;
+	while (!ft_strchr(buf, '\n') && n)
+	{
+		n = read(fd, buf, BUFFER_SIZE);
+		if (n < 0)
+			return (ft_memcpy(buf, "\0", 1), free(line), NULL);
+		buf[n] = 0;
+		tmp = ft_strjoin(line, buf);
+		free(line);
+		if (!tmp)
+			return (NULL);
+		line = tmp;
+	}
+	return (line);
+}
+
+static char	*cut_line(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		return (ft_substr(str, 0, i + 1));
+	else
+		return (ft_strdup(str));
+}
+
+static void	clean_buf(char *buf)
+{
+	int		i;
+	char	*nl;
+
+	i = 0;
+	while (buf[i] && buf[i] != '\n')
+		i++;
+	if (buf[i] == '\n')
+	{
+		nl = ft_strchr(buf, '\n');
+		if (nl)
+			ft_memcpy(buf, nl + 1, ft_strlen(nl));
+	}
+}
+
+char	*get_next_line(int fd)
+{
+	static char	buf[BUFFER_SIZE + 1];
+	char		*line;
+	char		*result;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (ft_memcpy(buf, "\0", 1), NULL);
+	line = ft_strdup(buf);
+	if (!line)
+		return (NULL);
+	line = fill_line(fd, buf, line);
+	if (!line)
+		return (NULL);
+	if (!*line)
+		return (free(line), NULL);
+	result = cut_line(line);
+	clean_buf(buf);
+	free(line);
+	return (result);
+}
+
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	int		i;
+
+// 	printf("BUFFER_SIZE = %d\n", BUFFER_SIZE);
+
+// 	fd = open("text.txt", O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		perror("open");
+// 		return (1);
+// 	}
+// 	i = 1;
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 		printf("Line %d: %s", i++, line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
