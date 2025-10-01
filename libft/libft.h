@@ -6,7 +6,7 @@
 /*   By: tbordian <tbordian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 15:05:18 by tbordian          #+#    #+#             */
-/*   Updated: 2025/07/20 16:58:34 by tbordian         ###   ########.fr       */
+/*   Updated: 2025/10/01 13:57:09 by tbordian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <stdarg.h>
+# include <fcntl.h>
 
 typedef struct s_list
 {
@@ -75,5 +77,19 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
+
+// ft_printf functions
+int					ft_printf(const char *f, ...);
+int					ft_putnbr_hex(unsigned long n, int uppercase);
+int					count_digits(int n);
+int					count_digits_unsigned(unsigned int n);
+int					ft_putnbr_unsigned(unsigned int n);
+
+// get_next_line functions
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+char				*get_next_line(int fd);
 
 #endif
