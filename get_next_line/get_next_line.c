@@ -6,24 +6,11 @@
 /*   By: tbordian <tbordian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 13:42:20 by tbordian          #+#    #+#             */
-/*   Updated: 2025/08/07 15:17:10 by tbordian         ###   ########.fr       */
+/*   Updated: 2025/10/04 23:08:07 by tbordian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	const char	*csrc = (const char *)src;
-	char		*cdest;
-
-	cdest = (char *)dest;
-	if (!dest && !src)
-		return (NULL);
-	while (n--)
-		*cdest++ = *csrc++;
-	return (dest);
-}
 
 static char	*fill_line(int fd, char *buf, char *line)
 {

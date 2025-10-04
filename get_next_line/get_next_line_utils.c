@@ -6,12 +6,11 @@
 /*   By: tbordian <tbordian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 13:42:18 by tbordian          #+#    #+#             */
-/*   Updated: 2025/10/04 23:05:12 by tbordian         ###   ########.fr       */
+/*   Updated: 2025/10/04 23:08:25 by tbordian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "../libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
