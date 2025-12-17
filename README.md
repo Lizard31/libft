@@ -134,52 +134,6 @@ make
 cc your_program.c -L. -lft -o your_program
 ```
 
-## Example
-
-Here's a simple example demonstrating the use of various libft functions:
-
-```c
-#include "libft.h"
-
-int main(void)
-{
-    char *str;
-    char **split;
-    int i;
-
-    // String manipulation
-    str = ft_strdup("Hello, 42 Heilbronn!");
-    ft_putendl_fd(str, 1);
-
-    // String splitting
-    split = ft_split("This is a test", ' ');
-    i = 0;
-    while (split[i])
-    {
-        ft_putendl_fd(split[i], 1);
-        free(split[i]);
-        i++;
-    }
-    free(split);
-
-    // Using ft_printf
-    ft_printf("Number: %d, Hex: %x\n", 42, 42);
-
-    // Using get_next_line
-    int fd = open("file.txt", O_RDONLY);
-    char *line;
-    while ((line = get_next_line(fd)))
-    {
-        ft_printf("%s", line);
-        free(line);
-    }
-    close(fd);
-
-    free(str);
-    return (0);
-}
-```
-
 ## Technical Details
 
 - All functions follow the 42 Norm coding standards
